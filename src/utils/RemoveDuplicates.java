@@ -20,7 +20,15 @@ public final class RemoveDuplicates {
 	 *            The array to have duplicates removed from
 	 */
 	public static void removeDuplicates(Object[] a) {
-		int test;
+		if (a == null) {
+			throw new NullPointerException();
+		}
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] == null) {
+				throw new IllegalArgumentException();
+			}
+		}
+
 		for (int i = 0; i < a.length; i++) {
 			Object next = a[i];
 			if (next == null) {
