@@ -1,3 +1,4 @@
+package utils;
 /**
  * Simple utility class to convert strings to their corresponding {@code int}
  * values so long as the string is a valid integer
