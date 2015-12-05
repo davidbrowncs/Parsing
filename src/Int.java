@@ -54,6 +54,7 @@ public final class Int {
 				}
 			}
 		}
+		// Test overflow
 		if ((negative && res > 0) || (!negative && res < 0)) {
 			throw new IllegalStateException();
 		}
