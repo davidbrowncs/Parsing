@@ -1,8 +1,36 @@
-public class Int {
-	private static char[] numChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+/**
+ * Simple utility class to convert strings to their corresponding {@code int}
+ * values so long as the string is a valid integer
+ *
+ * @author David
+ *
+ */
+public final class Int {
 
+	private static final char[] numChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+	private Int() {}
+
+	/**
+	 * Returns the integer value of the given string, or throws a
+	 * {@code NumberFormatException} if the given string contains invalid
+	 * characters
+	 *
+	 * @param s
+	 *            The string to convert
+	 * @return Returns the {@code int} version of the given string, so long as
+	 *         it is a valid integer
+	 */
 	public static int toInt(String s) {
+		if (s == null) {
+			throw new NullPointerException();
+		}
 		char[] vals = s.toCharArray();
+		if (vals.length == 0) {
+			throw new IllegalArgumentException();
+		} else if (getInt(vals[0]) == -1 && vals[0] != '-' && vals[0] != '+') {
+			throw new IllegalArgumentException();
+		}
 		boolean n = vals[0] == '-';
 
 		int res = 0;
@@ -10,7 +38,7 @@ public class Int {
 			for (int i = vals.length - 1, c = 0; i > 0; i--, c++) {
 				int next = getInt(vals[i]);
 				if (next == -1) {
-					throw new IllegalArgumentException();
+					throw new NumberFormatException();
 				} else {
 					res -= next * pow(10, c);
 				}
@@ -19,7 +47,7 @@ public class Int {
 			for (int i = vals.length - 1, c = 0; i >= 0; i--, c++) {
 				int next = getInt(vals[i]);
 				if (next == -1) {
-					throw new IllegalArgumentException();
+					throw new NumberFormatException();
 				} else {
 					res += next * pow(10, c);
 				}
@@ -28,6 +56,14 @@ public class Int {
 		return res;
 	}
 
+	/**
+	 * Returns the integer corresponding to the char given, if the given char is
+	 * not a digit this returns -1
+	 *
+	 * @param c
+	 *            Char to compare against valid number chars
+	 * @return The corresponding int
+	 */
 	private static int getInt(char c) {
 		for (int i = 0; i < numChars.length; i++) {
 			if (c == numChars[i]) {
@@ -37,6 +73,16 @@ public class Int {
 		return -1;
 	}
 
+	/**
+	 * Only works for integer powers, returns the value of the given value to
+	 * the given power (val ^ pow)
+	 *
+	 * @param val
+	 *            The value to apply the exponent to
+	 * @param pow
+	 *            The exponent to apply to the value
+	 * @return The value given by val^pow
+	 */
 	private static int pow(int val, int pow) {
 		int res = val;
 		if (pow == 0) {
