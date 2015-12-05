@@ -8,6 +8,7 @@
 public final class Int {
 
 	private static final char[] numChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+	int i = Integer.parseInt("a");
 
 	private Int() {}
 
@@ -27,14 +28,14 @@ public final class Int {
 		}
 		char[] vals = s.toCharArray();
 		if (vals.length == 0) {
-			throw new IllegalArgumentException();
+			throw new NumberFormatException();
 		} else if (getInt(vals[0]) == -1 && vals[0] != '-' && vals[0] != '+') {
-			throw new IllegalArgumentException();
+			throw new NumberFormatException();
 		}
-		boolean n = vals[0] == '-';
+		boolean negative = vals[0] == '-';
 
 		int res = 0;
-		if (n) {
+		if (negative) {
 			for (int i = vals.length - 1, c = 0; i > 0; i--, c++) {
 				int next = getInt(vals[i]);
 				if (next == -1) {
@@ -52,6 +53,9 @@ public final class Int {
 					res += next * pow(10, c);
 				}
 			}
+		}
+		if ((negative && res > 0) || (!negative && res < 0)) {
+			throw new IllegalStateException();
 		}
 		return res;
 	}
