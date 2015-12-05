@@ -78,4 +78,18 @@ public class RemoveDuplicatesTest {
 				null, null, null };
 		assertArrayEquals(test, a);
 	}
+
+	@Test
+	public void testNullArray() {
+		Object[] a = new Object[] { "a", null, "a", "b" };
+		RemoveDuplicates.removeDuplicates(a);
+		assertArrayEquals(new Object[] { "a", null, "b", null }, a);
+	}
+
+	@Test
+	public void testLotsOfNullArray() {
+		Object[] a = new Object[] { "a", "b", null, "a", null, "b", null, "c" };
+		RemoveDuplicates.removeDuplicates(a);
+		assertArrayEquals(new Object[] { "a", "b", null, "c", null, null, null, null }, a);
+	}
 }

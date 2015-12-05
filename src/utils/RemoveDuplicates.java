@@ -14,7 +14,8 @@ public final class RemoveDuplicates {
 	 * Removes all the duplicates from an array, and sets newly empty elements
 	 * to null (these will be at the end of the array and the non-duplicates
 	 * shifted left, e.g. {"a", "a", "b"} will go to {"a", "b", null}). The
-	 * given array cannot contain null elements
+	 * given array can contain null elements, {"a", null, "a", "b"} will become
+	 * {"a", null, "b", null}
 	 *
 	 * @param a
 	 *            The array to have duplicates removed from
@@ -23,28 +24,39 @@ public final class RemoveDuplicates {
 		if (a == null) {
 			throw new NullPointerException();
 		}
-		for (int i = 0; i < a.length; i++) {
-			if (a[i] == null) {
-				throw new IllegalArgumentException();
-			}
-		}
 
-		for (int i = 0; i < a.length; i++) {
+		int count = 0;
+		for (int i = 0; i < a.length - count; i++) {
 			Object next = a[i];
-			if (next == null) {
-				break;
-			}
 			int p = i + 1;
-			for (int j = i + 1; j < a.length; j++) {
-				if (!next.equals(a[j])) {
-					a[p++] = a[j];
-				} else {
-					a[p] = a[j];
+			int oldCount = count;
+
+			if (next != null) {
+				for (int j = i + 1; j < a.length - oldCount; j++) {
+					if (!next.equals(a[j])) {
+						a[p++] = a[j];
+					} else {
+						count++;
+						a[p] = a[j];
+					}
+				}
+				for (; p < a.length - oldCount; p++) {
+					a[p] = null;
+				}
+			} else {
+				for (int j = i + 1; j < a.length - oldCount; j++) {
+					if (a[j] != null) {
+						a[p++] = a[j];
+					} else {
+						count++;
+						a[p] = a[j];
+					}
+				}
+				for (; p < a.length - oldCount; p++) {
+					a[p] = null;
 				}
 			}
-			for (; p < a.length; p++) {
-				a[p] = null;
-			}
+
 		}
 	}
 
