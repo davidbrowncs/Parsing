@@ -38,12 +38,6 @@ public class SLOCCounter {
 		return rootFile.getAbsolutePath();
 	}
 
-	public static void main(String[] args) {
-		SLOCCounter c = new SLOCCounter(
-				"F:\\MyDocuments\\00ComputerScience\\1stYear\\00Modules\\COMP1202Programming1\\workspace", "java");
-		System.out.println("Source lines of code: " + c.getCount());
-	}
-
 	/**
 	 * Returns the number of non-empty lines of code in all files of type
 	 * {@code type} reachable from the directory {@code rootFile}
