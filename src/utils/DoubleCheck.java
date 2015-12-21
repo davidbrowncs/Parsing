@@ -48,4 +48,27 @@ public final class DoubleCheck {
 		return shifted / magnitude;
 	}
 
+	/**
+	 * Round a number to the nearest "nice" value
+	 * 
+	 * @param val
+	 *            Value to be rounded
+	 * @return Returns the "nicely" rounded number
+	 */
+	public static double roundNice(double val) {
+		double fraction = 1;
+		boolean negative = val < 0;
+		val = negative ? -val : val;
+		double log = Math.floor(Math.log10(val));
+
+		if (log > 1) {
+			fraction = 4;
+		}
+		if (negative) {
+			return -Math.round(val * fraction * Math.pow(10, -log)) / fraction / Math.pow(10, -log);
+		} else {
+			return Math.round(val * fraction * Math.pow(10, -log)) / fraction / Math.pow(10, -log);
+		}
+	}
+
 }
